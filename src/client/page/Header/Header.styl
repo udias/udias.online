@@ -1,0 +1,31 @@
+/**
+ * # Component: Header
+ *
+ *
+ */
+
+.Header {
+  padding: 10px;
+  background-color: $color-primary-3;
+}
+
+.Title, .Subtitle, .About {
+  display: inline-block;
+  color: white;
+}
+
+.Subtitle {
+  position: relative;
+  margin-left: 50px;
+
+  &::before {
+    content: '/';
+    position: absolute;
+    left: -25px;
+  }
+}
+
+.Spacer {
+  display: inline-block;
+  width: 50%;
+}

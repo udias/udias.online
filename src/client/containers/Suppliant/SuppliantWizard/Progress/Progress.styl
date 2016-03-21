@@ -1,0 +1,74 @@
+/**
+ * # Container: Suppliant - SuppliantWizard - Progress
+ *
+ */
+
+.Progress {
+  lost-utility: clearfix;
+  text-align: center;
+}
+
+.Step {
+  position: relative;
+  display: inline-block;
+  min-width: 33%; // 200px
+  text-align: center;
+  color: $color-black;
+
+  &:not(:first-child)::before, &:not(:last-child)::after {
+    position: absolute;
+    content: '';
+    // 5% gapsize
+    width: calc(45% - 1em);
+    height: 2px;
+    top: 1em;
+    background-color: black;
+  }
+
+  &:not(:first-child)::before {
+    left: 0;
+  }
+
+  &:not(:last-child)::after {
+    right: 0;
+  }
+
+  &--navigateable {
+    & .Index, & .Label {
+      cursor: pointer;
+    }
+  }
+
+  &--done {
+    & .Index {
+      color: $color-white;
+      background-color: lighten($color-black, 20%);
+      border-color: transparent;
+    }
+  }
+
+  &--active {
+    & .Index {
+      color: $color-white;
+      background-color: $color-black;
+      border-color: transparent;
+    }
+  }
+}
+
+.Index {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid black;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  line-height: calc(2em - 4px); // border radius
+  font-style: normal;
+}
+
+.Label {
+  display: block;
+  font-size: 0.8em;
+}

@@ -1,0 +1,57 @@
+/**
+ * # Component: Modal
+ *
+ *
+ */
+
+
+:global {
+  // modal transition
+  .modal-change {
+    &-enter {
+      & > div {
+        transform: translateY(-100%);
+      }
+      &.modal-change-enter-active > div {
+        transform: translateY(0);
+        transition: transform 500ms ease-in-out;
+      }
+    }
+    &-leave {
+      opacity: 1;
+      &.modal-change-leave-active {
+        opacity: 0;
+        transition: opacity 500ms ease-in-out;
+      }
+    }
+  }
+}
+
+.Overlay {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2px;
+  background-color: rgba($color-black, 0.7);
+}
+
+.Content {
+  lost-center: 768px;
+  padding: 20px;
+  border: 1px solid $color-white;
+  background: $color-white;
+  color: $color-black;
+}
+
+@media (max-width: 768px) {
+  .Content {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    padding: 10px;
+  }
+}
