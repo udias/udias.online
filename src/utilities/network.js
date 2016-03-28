@@ -1,16 +1,17 @@
 /**
  * # Utility: Network
  *
- * Communication helpers.
+ * Communication helpers
  */
 
 import { Client } from 'nes/client'
 import WebTorrent from 'webtorrent'
 
 /**
- * [createSocket description]
- * @param  {[type]} url [description]
- * @return {[type]}     [description]
+ * Create socket instance
+ *
+ * @param  {string}  url -
+ * @return {Promise}     -
  */
 export function createSocket (url) {
   return new Promise((resolve, reject) => {
@@ -25,8 +26,9 @@ export function createSocket (url) {
 }
 
 /**
- * [createPeer description]
- * @return {[type]} [description]
+ * Create peer instance
+ *
+ * @return {Promise} -
  */
 export function createPeer () {
   return new Promise((resolve) => {
@@ -44,20 +46,18 @@ export function createPeer () {
 class Socket {
 
   /**
-   * [constructor description]
-   * @param  {[type]} url [description]
-   * @return {[type]}     [description]
+   * @param  {string} url -
    */
   constructor (url) {
     this.client = new Client(url)
   }
 
   /**
-   * [on description]
-   * @param  {[type]}   path     [description]
-   * @param  {[type]}   handler  [description]
-   * @param  {Function} callback [description]
-   * @return {[type]}            [description]
+   * Listen for data on a channel
+   *
+   * @param  {string}   path     -
+   * @param  {Function} handler  -
+   * @param  {Function} callback -
    */
   on (path, handler, callback) {
     this.client.subscribe(path, handler, (error) => {
@@ -69,9 +69,10 @@ class Socket {
   }
 
   /**
-   * [once description]
-   * @param  {[type]} path [description]
-   * @return {[type]}      [description]
+   * Listen for data on a channel one time
+   *
+   * @param  {string}  path -
+   * @return {Promise}      -
    */
   once (path) {
     return new Promise((resolve, reject) => {
@@ -88,10 +89,11 @@ class Socket {
   }
 
   /**
-   * [send description]
-   * @param  {[type]} path    [description]
-   * @param  {[type]} message [description]
-   * @return {[type]}         [description]
+   * Send data through the websocket connection
+   *
+   * @param  {string}  path    -
+   * @param  {Object}  message -
+   * @return {Promise}         -
    */
   send (path, message) {
     return new Promise((resolve, reject) => {
@@ -105,10 +107,10 @@ class Socket {
   }
 
   /**
-   * [description]
-   * @param  {[type]} path  [description]
-   * @param  {[type]} query [description]
-   * @return {[type]}       [description]
+   * Send GET request
+   *
+   * @param  {string}  path -
+   * @return {Promise}      -
    */
   get (path) {
     return new Promise((resolve, reject) => {
@@ -137,9 +139,10 @@ class Peer {
   }
 
   /**
-   * [load description]
-   * @param  {[type]} source [description]
-   * @return {[type]}        [description]
+   * Get torrent of a source
+   *
+   * @param  {string}  source -
+   * @return {Promise}        -
    */
   load (source) {
     return new Promise((resolve, reject) => {
@@ -150,9 +153,10 @@ class Peer {
   }
 
   /**
-   * [seed description]
-   * @param  {[type]} files [description]
-   * @return {[type]}       [description]
+   * Distribute files
+   *
+   * @param  {Object}  files -
+   * @return {Promise}       -
    */
   seed (files) {
     return new Promise((resolve, reject) => {
@@ -163,9 +167,10 @@ class Peer {
   }
 
   /**
-   * Provide either the hash or torrent to ready
-   * @param  {[type]} source [description]
-   * @return {[type]}        [description]
+   * Get the buffer from a source / torrent
+   *
+   * @param  {string|Object} source -
+   * @return {Promise}              -
    */
   read (source) {
     const getTorrent = (typeof source === 'string') ? this.load(source) : Promise.resolve(source)
@@ -195,8 +200,9 @@ class Peer {
 
   /**
    * Assign name/path reference
-   * @param  {[type]} data [description]
-   * @return {[type]}      [description]
+   *
+   * @param  {Object} data -
+   * @return {Promise}     -
    */
   write (data) {
     const vdoc = new Buffer(JSON.stringify(data))
@@ -207,7 +213,8 @@ class Peer {
 
 /**
  * Based on diaffigys detect implementation: https://github.com/diafygi/webrtc-ips
- * @return {[type]} [description]
+ *
+ * @return {Promise} -
  */
 export function getLocalAdress(){
   return new Promise((resolve) => {

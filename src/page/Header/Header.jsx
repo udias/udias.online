@@ -21,9 +21,9 @@ export default class Header extends Component {
           <span className={__['Subtitle']}>Universal Distributed Assistance</span>
         </Link>
         <span className={__['Spacer']}/>
-        <Link className={__['About']} to="https://github.com/udias/udias.online">
-          | Source
-        </Link>
+        <a className={__['Source']} href="https://github.com/udias/udias.online" target="_blank">
+          {'{ Source }'}
+        </a>
       </header>
     )
   }

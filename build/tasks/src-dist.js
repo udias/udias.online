@@ -36,14 +36,14 @@ export default (env) => {
       entry: {
         main: [
           'babel-polyfill',
-          `${env.SRC}/client/main.js`
+          `${env.SRC}/main.js`
         ]
       },
       resolve: {
         extensions: ['', '.js', '.jsx', '.json']
       },
       output: {
-        path: `${env.DIST}/client`,
+        path: env.DIST,
         filename: 'bundle.js'
       },
       node: {
@@ -58,7 +58,7 @@ export default (env) => {
         loaders: [
           {
             test: /\.jsx?$/,
-            include: `${env.SRC}/client`,
+            include: env.SRC,
             loader: 'babel',
             query: {
 
@@ -99,7 +99,7 @@ export default (env) => {
       // specific packages
       stylus: {
         use: [typographic()],
-        import: ['typographic', `${env.SRC}/client/design/**`],
+        import: ['typographic', `${env.SRC}/design/**`],
         errors: true
       },
       postcss: function(){
@@ -117,11 +117,11 @@ export default (env) => {
 
     // clean + copy icon
     emptyDirSync(config.output.path)
-    copySync(`${env.SRC}/client/static/favicon.png`, `${config.output.path}/favicon.png`)
+    copySync(`${env.SRC}/static/favicon.png`, `${config.output.path}/favicon.png`)
 
     if (__DEVELOPMENT__) { // = development
 
-      copySync(`${env.SRC}/client/static/index.dev.html`, `${config.output.path}/index.html`)
+      copySync(`${env.SRC}/static/index.dev.html`, `${config.output.path}/index.html`)
 
       const virtual = {
         host: 'localhost',
@@ -135,7 +135,7 @@ export default (env) => {
         entry: {
           main: [
             // -> queryparams enable reload
-            `webpack-hot-middleware/client?path=http://${virtual.host}:${virtual.port}/__webpack_hmr`
+            `webpack-hot-middleware?path=http://${virtual.host}:${virtual.port}/__webpack_hmr`
           ]
         },
         output: {
@@ -200,7 +200,7 @@ export default (env) => {
       })
     }
 
-    copySync(`${env.SRC}/client/static/index.html`, `${config.output.path}/index.html`)
+    copySync(`${env.SRC}/static/index.html`, `${config.output.path}/index.html`)
 
     // = production
     config = merge(config, {

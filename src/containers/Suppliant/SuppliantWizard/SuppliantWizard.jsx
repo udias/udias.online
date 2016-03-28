@@ -198,18 +198,18 @@ export default class SuppliantWizard extends Component {
         manifest: infoHash,
         connection
       }
-      console.log(message)
 
       socket.once(`/tasks/results/${infoHash}`).then((data) => {
-        // data
-        console.log('resultHash', data)
+        console.log('resultHash:', data);
         peer.read(data).then((result) => {
-          console.log('peer', result)
+          console.log('result', result)
+          // TODO:
+          // - update SuppliantPending & inform remote worker
         })
       })
 
       socket.send('/tasks/entries', message).then(() => {
-        console.log('=>', torrent.infoHash, torrent.magnetURI)
+        console.log('=>', torrent.infoHash)
         toggleRequestConfirmed()
       })
     })

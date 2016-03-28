@@ -19,14 +19,14 @@ export default class Main extends Component {
           <div className={__['Info']}>
             <h3 className={__['Header']}>About</h3>
             <p>
-              This services allows you to create
-              It uses <a href="https://webtorrent.io/">WebTorrent</a>
-              to create a peer driven network for exchanging these task and their data.
+              This website provides a service to handle computation tasks,
+              solved by other user. It uses <a href="https://webtorrent.io/">WebTorrent</a> to create a peer driven network for exchanging meta information
+              about these task and their data.
             </p>
             <p>
-              Install the node client to use the platform from the commandline:
+              Install the node client to use it from the command line:
             </p>
-            <a className={__['Link']} href="http://github.com/uidas/udias-cli" target="_blank">
+            <a className={__['Link']} href="http://github.com/udias/udias-cli" target="_blank">
               npm install -g udias-cli
             </a>
           </div>

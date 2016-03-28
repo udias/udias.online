@@ -25,7 +25,6 @@ import Modal from './Modal/Modal'
 
 import __ from './App.styl'
 
-
 @connect(null, (dispatch) => ({
   updateConnectionAddress: (address) => dispatch(updateAddress(address)),
   updateSocketTypes: (types) => dispatch(updateTypes(types)),
@@ -53,8 +52,7 @@ export default class App extends Component {
     } = this.props
 
     Promise.all([
-      // DEVELOPMENT: 'ws://localhost:8000'
-      createSocket('ws://udias.online'),
+      createSocket(__DEVELOPMENT__ ? 'ws://localhost:9000' : 'ws://udias.online:64452'),
       createPeer()
     ])
     .then(([ socket, peer ]) => {

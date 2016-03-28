@@ -1,7 +1,7 @@
 /**
  * # Utility: Adapter
  *
- * Use shims and polyfills.
+ * Use shims and polyfills
  */
 
 if (!window.RTCPeerConnection) {
