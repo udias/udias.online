@@ -16,7 +16,8 @@ import {
   updateScope,
   toggleDetails,
   updateManifest,
-  toggleConfirmed
+  toggleConfirmed,
+  addResult
 } from '../../../redux/modules/request'
 
 import { updateDetails } from '../../../redux/modules/connection'
@@ -45,7 +46,8 @@ import __ from './SuppliantWizard.styl'
   toggleRequestDetails: () => dispatch(toggleDetails()),
   updateConnectionDetails: (details) => dispatch(updateDetails(details)),
   updateRequestManifest: (manifest) => dispatch(updateManifest(manifest)),
-  toggleRequestConfirmed: () => dispatch(toggleConfirmed())
+  toggleRequestConfirmed: () => dispatch(toggleConfirmed()),
+  addRequestResult: (result) => dispatch(addResult(result))
 }))
 export default class SuppliantWizard extends Component {
 
@@ -155,7 +157,14 @@ export default class SuppliantWizard extends Component {
     e.stopPropagation()
 
     const { socket, peer } = this.props
-    const { updateConnectionDetails, updateRequestManifest, toggleRequestConfirmed } = this.props
+
+    const {
+      updateConnectionDetails,
+      updateRequestManifest,
+      toggleRequestConfirmed,
+      addRequestResult
+    } = this.props
+
     const { address, setup, request } = this.props
 
     const { type, values, scope, details } = request
@@ -200,11 +209,12 @@ export default class SuppliantWizard extends Component {
       }
 
       socket.once(`/tasks/results/${infoHash}`).then((data) => {
-        console.log('resultHash:', data);
+        console.log('resultHash:', data)
         peer.read(data).then((result) => {
           console.log('result', result)
           // TODO:
-          // - update SuppliantPending & inform remote worker
+          // - inform remote worker
+          addRequestResult(result)
         })
       })
 

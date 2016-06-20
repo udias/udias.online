@@ -7,6 +7,10 @@
 import { Client } from 'nes/client'
 import WebTorrent from 'webtorrent'
 
+if (!WebTorrent.WEBRTC_SUPPORT) {
+  alert('Unfortunately it seems like yout browser doesn\'t support WebRTC yet...')
+}
+
 /**
  * Create socket instance
  *
@@ -78,7 +82,7 @@ class Socket {
     return new Promise((resolve, reject) => {
       const { client } = this
       client.subscribe(path, function receive (message) {
-        client.unsubscribe(path, receive)
+        client.unsubscribe(path, receive, (error) => error && console.error(error))
         return resolve(message)
       }, (error) => {
         if (error) {
@@ -146,6 +150,13 @@ class Peer {
    */
   load (source) {
     return new Promise((resolve, reject) => {
+      // check if torrent is already available
+      const { torrents } = this.client
+      const torrent = torrents.find((torrent) => torrent.infoHash === source)
+      if (torrent) {
+        return resolve(torrent)
+      }
+      // else load
       this.client.add(source, (torrent) => {
         return resolve(torrent)
       })
