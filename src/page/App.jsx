@@ -23,6 +23,8 @@ import Main from './Main/Main'
 import Footer from './Footer/Footer'
 import Modal from './Modal/Modal'
 
+import config from '../../config'
+
 import __ from './App.styl'
 
 @connect(null, (dispatch) => ({
@@ -52,7 +54,7 @@ export default class App extends Component {
     } = this.props
 
     Promise.all([
-      createSocket(__DEVELOPMENT__ ? 'ws://localhost:9000' : 'ws://udias.online:64452'),
+      createSocket(`ws://${config.host}:${config.port}`),
       createPeer()
     ])
     .then(([ socket, peer ]) => {
@@ -62,6 +64,7 @@ export default class App extends Component {
 
       // initial request for remoteAdress
       socket.get('/api/v1/connection/address').then((address) => {
+
         updateConnectionAddress(address)
 
         socket.on('/tasks/types', updateSocketTypes)
